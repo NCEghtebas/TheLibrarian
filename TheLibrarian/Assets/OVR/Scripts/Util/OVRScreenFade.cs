@@ -37,9 +37,13 @@ public class OVRScreenFade : MonoBehaviour
 	/// </summary>
 	public Color fadeColor = new Color(0.01f, 0.01f, 0.01f, 1.0f);
 
+	/// <summary>
+	/// The shader to use when rendering the fade.
+	/// </summary>
+	public Shader fadeShader = null;
+
 	private Material fadeMaterial = null;
 	private bool isFading = false;
-	private YieldInstruction fadeInstruction = new WaitForEndOfFrame();
 
 	/// <summary>
 	/// Initialize.
@@ -47,7 +51,7 @@ public class OVRScreenFade : MonoBehaviour
 	void Awake()
 	{
 		// create the fade material
-		fadeMaterial = new Material(Shader.Find("Oculus/Unlit Transparent Color"));
+		fadeMaterial = (fadeShader != null) ? new Material(fadeShader) : new Material(Shader.Find("Transparent/Diffuse"));
 	}
 
 	/// <summary>
@@ -83,12 +87,11 @@ public class OVRScreenFade : MonoBehaviour
 	IEnumerator FadeIn()
 	{
 		float elapsedTime = 0.0f;
-		fadeMaterial.color = fadeColor;
-		Color color = fadeColor;
+		Color color = fadeMaterial.color = fadeColor;
 		isFading = true;
 		while (elapsedTime < fadeTime)
 		{
-			yield return fadeInstruction;
+			yield return new WaitForEndOfFrame();
 			elapsedTime += Time.deltaTime;
 			color.a = 1.0f - Mathf.Clamp01(elapsedTime / fadeTime);
 			fadeMaterial.color = color;
