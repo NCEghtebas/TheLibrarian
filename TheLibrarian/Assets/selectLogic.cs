@@ -6,6 +6,7 @@ public class selectLogic : MonoBehaviour {
 	private Controller m_controller;
 	public GameObject obj; 
 	public GameObject m_camera;
+	private string lastUrl="";
 	// Use this for initialization
 	void Start () {
 		m_controller = new Controller();
@@ -33,7 +34,12 @@ public class selectLogic : MonoBehaviour {
 				Vector3 facing= m_camera.transform.forward;
 				RaycastHit hit= new RaycastHit();
 				if (Physics.Raycast(m_camera.transform.position,facing,out hit,1000.0f,layerMask)){
-					Debug.Log(hit.collider.name);
+					BookLogic the_book=hit.collider.gameObject.GetComponent<BookLogic>();
+					string the_url=the_book.getUrl();
+					if (lastUrl!=the_url){
+						Application.OpenURL(the_url);
+						lastUrl=the_url;
+					}
 				}
 			}
 			else if (gesture.Type ==Gesture.GestureType.TYPE_SWIPE){

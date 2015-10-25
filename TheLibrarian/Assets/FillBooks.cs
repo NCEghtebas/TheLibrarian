@@ -12,11 +12,13 @@ public class FillBooks : MonoBehaviour {
 	public BookLogic book_6;
 	
 	public string m_category;
+	public GameObject m_header;
 
 	void Start(){
 		string url = "https://"+m_category+".hearst.io/api/v1/articles?section_id=2&visibility=1&all_images=0&get_image_cuts=0&ignore_cache=0&limit=10&order_by=date+desc&_key=vau2bqeepwtfygwt2444pksw";
 		WWW www = new WWW(url);
 		StartCoroutine (WaitForRequest (www));
+		m_header.GetComponent<TextMesh> ().text = m_category;
 	}
 
 	private ArrayList getUrls(string data){
@@ -72,7 +74,7 @@ public class FillBooks : MonoBehaviour {
 //			printList (titles);
 
 		} else {
-			Debug.Log ("WWW Error: " + www.error);
+			Debug.Log ("WWW Error from "+m_category+" : " + www.error);
 		} 
 	}
 
