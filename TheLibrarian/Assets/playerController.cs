@@ -9,7 +9,6 @@ public class playerController : MonoBehaviour {
 	void Update() {
 		CharacterController controller = GetComponent<CharacterController>();
 		moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
-		Debug.Log (Input.GetAxis("Horizontal"));
 		moveDirection = transform.TransformDirection(moveDirection);
 		moveDirection *= speed;
 		controller.Move(moveDirection * Time.deltaTime);
