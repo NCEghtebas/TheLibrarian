@@ -32,6 +32,19 @@ public class FillBooks : MonoBehaviour {
 		return urls;
 	}
 
+	private ArrayList getImageIds(string data){
+		ArrayList imageIds = new ArrayList ();
+		Debug.Log (data);
+//		Match match = Regex.Match(data, "\"url\":\"([^\"]*)");
+//		while (match.Success) {
+//			string url_str = match.ToString ().Remove (0, 7);
+//			urls.Add(url_str);
+//			match = match.NextMatch();
+//		}
+		return imageIds;
+	}
+
+
 	private ArrayList getTitles(string data){
 		ArrayList titles = new ArrayList ();
 		Match match = Regex.Match (data, "\"title\":\"([^\"]*)");
@@ -56,6 +69,7 @@ public class FillBooks : MonoBehaviour {
 		if (www.error == null) {
 			ArrayList urls = getUrls (www.data);
 			ArrayList titles = getTitles (www.data);
+			ArrayList imageIds = getImageIds(www.data);
 
 			book_1.setUrl ((string)urls[0]);
 			book_1.setTitle((string)titles[0]);
