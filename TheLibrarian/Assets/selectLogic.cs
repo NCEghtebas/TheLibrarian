@@ -5,6 +5,7 @@ using Leap;
 public class selectLogic : MonoBehaviour {
 	private Controller m_controller;
 	public GameObject obj; 
+	public GameObject m_camera;
 	// Use this for initialization
 	void Start () {
 		m_controller = new Controller();
@@ -27,15 +28,13 @@ public class selectLogic : MonoBehaviour {
 				Debug.Log ("KEY TAP");
 			}
 			else if (gesture.Type ==Gesture.GestureType.TYPE_CIRCLE){
+				int layerMask=1<<8;
 				CircleGesture circ = new CircleGesture(gesture);
-				Leap.Vector center=circ.Center;
-				Leap.Vector norm=circ.Normal;
-//				Debug.DrawRay(center,norm*3,Color.red);
-				Vector3 cen=center.ToUnity();
-				Debug.DrawRay(cen,Vector3.one,Color.red);
-				Debug.Log (cen);
-				obj=new GameObject();
-				obj.transform.position=cen;
+				Vector3 facing= m_camera.transform.forward;
+				RaycastHit hit= new RaycastHit();
+				if (Physics.Raycast(m_camera.transform.position,facing,out hit,1000.0f,layerMask)){
+					Debug.Log(hit.collider.name);
+				}
 			}
 			else if (gesture.Type ==Gesture.GestureType.TYPE_SWIPE){
 				SwipeGesture swipe = new SwipeGesture(gesture);
