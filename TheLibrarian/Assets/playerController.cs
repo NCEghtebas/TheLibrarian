@@ -12,12 +12,5 @@ public class playerController : MonoBehaviour {
 		moveDirection = transform.TransformDirection(moveDirection);
 		moveDirection *= speed;
 		controller.Move(moveDirection * Time.deltaTime);
-//		if (OVRManager.isHSWDisplayed)
-//		{
-//			if (Input.anyKeyDown)
-//			{
-//				OVRManager.DismissHSWDisplay();
-//			}
-//		}
 	}
 }
